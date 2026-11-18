@@ -6,21 +6,15 @@
     <meta name="description" content="王湉甜的产品、AI 与运营作品集" />
     <title>王湉甜｜产品与运营作品集</title>
   </head>
-  <body class="home-page">
+  <body>
     <header class="site-header">
       <a class="brand" href="./index.html">WTT / PORTFOLIO</a>
-      <div class="tabs header-tabs" role="tablist" aria-label="作品类型">
-        <button
-          class="is-active"
-          data-section="projects"
-          role="tab"
-          aria-selected="true"
-        >
-          项目经历 / Projects</button
-        ><button data-section="operations" role="tab" aria-selected="false">
-          运营经历 / Operations
-        </button>
-      </div>
+      <nav class="desktop-nav" aria-label="主要导航">
+        <a href="#home">首页 / Home</a>
+        <a href="#work" data-nav-section="projects">项目作品 / Projects</a>
+        <a href="#work" data-nav-section="operations">运营经历 / Operations</a>
+        <a href="#about">关于我 / About</a>
+      </nav>
       <a
         class="resume-link"
         href="#"
@@ -29,15 +23,73 @@
         >简历 / Resume</a
       >
     </header>
-    <main class="home-stage">
-      <section class="work" aria-label="作品展示">
+    <main>
+      <section class="hero" id="home" aria-labelledby="hero-title">
+        <div>
+          <p class="hero-label">PRODUCT · AI · OPERATIONS</p>
+          <h1 id="hero-title">
+            把复杂问题，<br /><span>做成可用的方案。</span>
+          </h1>
+          <p class="hero-copy">
+            你好，我是王湉甜。一个从业务与用户问题出发，也会借助 AI 与 Vibe
+            Coding 快速验证想法的产品与运营候选人。
+          </p>
+          <div class="hero-actions">
+            <a class="primary-button" href="#work" data-nav-section="projects"
+              >查看项目作品 <span aria-hidden="true">↓</span></a
+            >
+            <a
+              class="secondary-button"
+              href="#work"
+              data-nav-section="operations"
+              >查看运营经历</a
+            >
+          </div>
+        </div>
+        <div class="portrait-placeholder" aria-label="个人照片待补">
+          <div><strong>PHOTO AREA</strong><span>个人照片稍后替换</span></div>
+        </div>
+      </section>
+
+      <section class="work" id="work" aria-labelledby="work-title">
+        <div class="work-head">
+          <div>
+            <p class="hero-label">SELECTED WORK</p>
+            <h2 id="work-title">用案例证明判断。</h2>
+          </div>
+          <div class="tabs" role="tablist" aria-label="作品类型">
+            <button
+              class="is-active"
+              data-section="projects"
+              role="tab"
+              aria-selected="true"
+            >
+              项目经历 / Projects</button
+            ><button data-section="operations" role="tab" aria-selected="false">
+              运营经历 / Operations
+            </button>
+          </div>
+        </div>
         <div data-slide aria-live="polite"></div>
         <div class="controls" aria-label="案例翻页">
           <button data-previous aria-label="上一个案例">←</button
           ><button data-next aria-label="下一个案例">→</button>
         </div>
       </section>
+
+      <section class="about" id="about" aria-labelledby="about-title">
+        <div class="about-card">
+          <h2 id="about-title">我关心的不只是功能上线。</h2>
+          <p>
+            我更关心问题是否被真正解决、团队是否愿意使用，以及一次项目能否沉淀为下一次更快的判断。作品集中的案例覆盖
+            AI 产品、服务设计、数据运营、内容增长与用户研究。
+          </p>
+        </div>
+      </section>
     </main>
+    <footer class="site-footer">
+      <span>王湉甜 · 产品与运营作品集</span><span>持续补充真实素材</span>
+    </footer>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

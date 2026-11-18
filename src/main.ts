@@ -10,6 +10,10 @@ const viewport = document.querySelector<HTMLElement>("[data-slide]");
 const tabs = Array.from(
   document.querySelectorAll<HTMLButtonElement>("[data-section]"),
 );
+const navigationLinks = Array.from(
+  document.querySelectorAll<HTMLAnchorElement>("[data-nav-section]"),
+);
+const workSection = document.querySelector<HTMLElement>("#work");
 const previous = document.querySelector<HTMLButtonElement>("[data-previous]");
 const next = document.querySelector<HTMLButtonElement>("[data-next]");
 
@@ -43,18 +47,19 @@ function renderItem(item: PortfolioItem, total: number): string {
   return `
     <article class="slide-card" style="--item-accent:${item.accent}">
       <div class="slide-copy">
-        <p class="eyebrow">王湉甜 · ${escapeHtml(item.eyebrow)}</p>
+        <div class="case-kicker"><span>CASE 0${state.index + 1}</span><p class="eyebrow">${escapeHtml(item.eyebrow)}</p></div>
         <h2>${escapeHtml(item.title)}</h2>
         <p class="slide-summary">${escapeHtml(item.summary)}</p>
         <div class="meta"><span>${escapeHtml(item.role)}</span><span>${escapeHtml(item.period)}</span></div>
+        <p class="evidence-label">关键结果 / EVIDENCE</p>
         <ul class="metric-list">${metrics}</ul>
         <ol class="slide-highlights">${highlights}</ol>
-        <a class="case-link secondary-case-link" href="${item.href}">补充详情 <span aria-hidden="true">↗</span></a>
+        <a class="case-link secondary-case-link" href="${item.href}">查看完整案例 <span aria-hidden="true">↗</span></a>
       </div>
       <div class="slide-visual" role="img" aria-label="${escapeHtml(item.visualLabel)}">
         <div class="orb orb-one"></div><div class="orb orb-two"></div>
         <span class="visual-index">0${state.index + 1}</span>
-        <p>${escapeHtml(item.visualLabel)}</p>
+        <div class="visual-ticket"><span>PROJECT EVIDENCE</span><p>${escapeHtml(item.visualLabel)}</p><small>素材到位后替换为真实截图</small></div>
       </div>
       <div class="slide-count"><strong>0${state.index + 1}</strong><span>/ 0${total}</span></div>
     </article>`;
@@ -87,6 +92,15 @@ tabs.forEach((tab) => {
     state.section = tab.dataset.section as Section;
     state.index = 0;
     render();
+  });
+});
+navigationLinks.forEach((link) => {
+  link.addEventListener("click", (event) => {
+    event.preventDefault();
+    state.section = link.dataset.navSection as Section;
+    state.index = 0;
+    render();
+    workSection?.scrollIntoView({ behavior: "smooth", block: "start" });
   });
 });
 previous?.addEventListener("click", () => move(-1));
