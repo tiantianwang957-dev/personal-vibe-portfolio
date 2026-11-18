@@ -6,96 +6,38 @@
     <meta name="description" content="王湉甜的产品、AI 与运营作品集" />
     <title>王湉甜｜产品与运营作品集</title>
   </head>
-  <body>
+  <body class="home-page">
     <header class="site-header">
-      <a class="brand" href="#top">WTT / PORTFOLIO</a>
-      <nav class="desktop-nav" aria-label="主导航">
-        <a href="#top">首页 / Home</a><a href="#work">项目作品 / Projects</a
-        ><a href="#work">运营经历 / Operations</a
-        ><a href="#about">关于我 / About</a
-        ><a
-          class="resume-link"
-          href="#resume"
-          aria-label="简历将在公开信息复核后提供"
-          >下载简历 / Resume</a
+      <a class="brand" href="./index.html">WTT / PORTFOLIO</a>
+      <div class="tabs header-tabs" role="tablist" aria-label="作品类型">
+        <button
+          class="is-active"
+          data-section="projects"
+          role="tab"
+          aria-selected="true"
         >
-      </nav>
+          项目经历 / Projects</button
+        ><button data-section="operations" role="tab" aria-selected="false">
+          运营经历 / Operations
+        </button>
+      </div>
+      <a
+        class="resume-link"
+        href="#"
+        aria-disabled="true"
+        aria-label="简历将在公开信息复核后提供"
+        >简历 / Resume</a
+      >
     </header>
-    <main>
-      <section class="hero" id="top">
-        <div>
-          <p class="hero-label">AI PRODUCT · OPERATIONS · VIBE CODING</p>
-          <h1>发现问题，<br /><span>做出产品。</span></h1>
-          <p class="hero-copy">
-            你好，我是王湉甜。关注 AI
-            如何进入真实工作流，也喜欢把复杂业务快速做成能看、能用、能验证的产品。
-          </p>
-          <div class="hero-actions">
-            <a class="primary-button" href="#work">查看代表作品</a
-            ><a class="secondary-button" href="#about">了解我的经历</a>
-          </div>
-        </div>
-        <div class="portrait-placeholder" role="img" aria-label="个人照片占位">
-          <div>
-            <strong>PERSONAL PHOTO</strong><span>个人照片稍后替换</span>
-          </div>
-        </div>
-      </section>
-      <section class="work" id="work">
-        <div class="work-head">
-          <div>
-            <p class="eyebrow">SELECTED WORK</p>
-            <h2>项目与运营实践</h2>
-          </div>
-          <div class="tabs" role="tablist" aria-label="作品类型">
-            <button
-              class="is-active"
-              data-section="projects"
-              role="tab"
-              aria-selected="true"
-            >
-              项目作品</button
-            ><button data-section="operations" role="tab" aria-selected="false">
-              运营经历
-            </button>
-          </div>
-        </div>
+    <main class="home-stage">
+      <section class="work" aria-label="作品展示">
         <div data-slide aria-live="polite"></div>
         <div class="controls" aria-label="案例翻页">
           <button data-previous aria-label="上一个案例">←</button
           ><button data-next aria-label="下一个案例">→</button>
         </div>
       </section>
-      <section class="about" id="about">
-        <div class="about-card">
-          <div>
-            <p class="eyebrow">ABOUT ME</p>
-            <h2>懂业务，也愿意亲手把想法做出来。</h2>
-          </div>
-          <div>
-            <p>
-              首都经济贸易大学工商管理实验班本科，2027 届。经历覆盖 B 端产品、AI
-              应用、用户增长、内容运营和项目交付。
-            </p>
-            <p>
-              常用方法包括需求分析、PRD、原型、Prompt、RAG、Agent
-              工作流、指标体系、漏斗分析与 Vibe Coding。
-            </p>
-            <a
-              class="secondary-button"
-              id="resume"
-              href="#"
-              aria-disabled="true"
-              >简历复核后开放下载</a
-            >
-          </div>
-        </div>
-      </section>
     </main>
-    <footer class="site-footer">
-      <span>© 2026 王湉甜</span
-      ><span>联系方式与 GitHub 链接将在公开信息复核后补充</span>
-    </footer>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

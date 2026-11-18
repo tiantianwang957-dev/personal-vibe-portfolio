@@ -30,15 +30,26 @@ function renderItem(item: PortfolioItem, total: number): string {
   const metrics = item.metrics
     .map((metric) => `<li>${escapeHtml(metric)}</li>`)
     .join("");
+  const highlights = item.story
+    .slice(0, 3)
+    .map(
+      (entry) => `
+        <li>
+          <strong>${escapeHtml(entry.title)}</strong>
+          <span>${escapeHtml(entry.body)}</span>
+        </li>`,
+    )
+    .join("");
   return `
     <article class="slide-card" style="--item-accent:${item.accent}">
       <div class="slide-copy">
-        <p class="eyebrow">${escapeHtml(item.eyebrow)}</p>
+        <p class="eyebrow">王湉甜 · ${escapeHtml(item.eyebrow)}</p>
         <h2>${escapeHtml(item.title)}</h2>
         <p class="slide-summary">${escapeHtml(item.summary)}</p>
         <div class="meta"><span>${escapeHtml(item.role)}</span><span>${escapeHtml(item.period)}</span></div>
         <ul class="metric-list">${metrics}</ul>
-        <a class="case-link" href="${item.href}">查看完整案例 <span aria-hidden="true">↗</span></a>
+        <ol class="slide-highlights">${highlights}</ol>
+        <a class="case-link secondary-case-link" href="${item.href}">补充详情 <span aria-hidden="true">↗</span></a>
       </div>
       <div class="slide-visual" role="img" aria-label="${escapeHtml(item.visualLabel)}">
         <div class="orb orb-one"></div><div class="orb orb-two"></div>

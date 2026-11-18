@@ -12,6 +12,7 @@
     "moduleDetection": "force",
     "noEmit": true,
     "strict": true,
+    "types": ["vite/client", "node"],
     "noUncheckedIndexedAccess": true
   },
   "include": ["src"]
