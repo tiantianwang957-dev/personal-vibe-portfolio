@@ -1194,16 +1194,121 @@ a {
 }
 
 @media (max-height: 760px) and (min-width: 851px) {
+  .presentation-site .site-header {
+    height: 64px;
+    padding-block: 8px;
+  }
+
+  .presentation-stage {
+    padding-top: 64px;
+  }
+
+  .stage-panel {
+    inset: 64px 0 0;
+  }
+
+  .case-panel {
+    gap: 8px;
+    padding: 10px clamp(20px, 3vw, 46px) 62px;
+  }
+
+  .panel-heading {
+    font-size: 11px;
+  }
+
+  .experience-page {
+    gap: 24px;
+    padding: 18px 22px;
+  }
+
+  .experience-copy {
+    max-height: 100%;
+    overflow-y: auto;
+    padding-right: 6px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--line) transparent;
+  }
+
   .experience-copy .slide-highlights li {
-    min-height: 94px;
-    padding: 11px;
+    min-height: 82px;
+    padding: 9px 10px;
+    line-height: 1.35;
+  }
+
+  .experience-copy .slide-highlights span {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   .experience-copy h2 {
-    font-size: clamp(30px, 3.8vw, 50px);
+    margin: 6px 0 8px;
+    font-size: clamp(28px, 3.2vw, 42px);
+  }
+
+  .experience-copy .slide-summary {
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .experience-copy .meta {
+    margin: 8px 0;
+  }
+
+  .experience-copy .meta span,
+  .experience-copy .metric-list li {
+    padding: 7px 9px;
+    font-size: 11px;
+  }
+
+  .experience-copy .metric-list,
+  .experience-copy .slide-highlights {
+    margin-bottom: 8px;
+  }
+
+  .experience-copy .case-link {
+    padding: 9px 13px;
+    font-size: 12px;
   }
 
   .experience-visual {
-    min-height: 330px;
+    min-height: 270px;
+    padding: 20px;
+  }
+
+  .visual-ticket {
+    padding: 17px;
+  }
+
+  .visual-ticket p {
+    margin: 8px 0 18px;
+    font-size: 17px;
+  }
+
+  .case-controls {
+    bottom: 10px;
+  }
+
+  .case-controls button {
+    width: 38px;
+    height: 38px;
+  }
+
+  .hero-panel,
+  .resume-panel {
+    padding-block: 28px;
+  }
+
+  .hero-panel h1 {
+    font-size: clamp(44px, 6.2vw, 72px);
+  }
+
+  .resume-copy h2 {
+    font-size: clamp(40px, 5vw, 64px);
+  }
+
+  .resume-board article {
+    padding: 16px;
   }
 }

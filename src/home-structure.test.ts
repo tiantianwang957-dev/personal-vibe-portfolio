@@ -7,6 +7,10 @@ const home = readFileSync(
   "utf8",
 );
 const script = readFileSync(resolve(import.meta.dirname, "./main.ts"), "utf8");
+const styles = readFileSync(
+  resolve(import.meta.dirname, "./styles/main.css"),
+  "utf8",
+);
 
 describe("presentation website structure", () => {
   it("provides the four confirmed primary views", () => {
@@ -38,5 +42,10 @@ describe("presentation website structure", () => {
 
   it("does not use separate case pages as primary navigation", () => {
     expect(home).not.toMatch(/href="\.\/cases\//);
+  });
+
+  it("keeps case content reachable on short desktop screens", () => {
+    expect(styles).toContain("@media (max-height: 760px)");
+    expect(styles).toContain("overflow-y: auto");
   });
 });
