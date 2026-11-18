@@ -33,6 +33,8 @@ describe("presentation website structure", () => {
     expect(home).toContain("data-dialog-content");
     expect(script).toContain("showModal()");
     expect(script).toContain("[data-open-case]");
+    expect(script).toContain("case-study-nav");
+    expect(script).toContain("caseDetails");
   });
 
   it("retains the personal introduction and photo area", () => {

@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { getItem, getItems, portfolioItems } from "./content";
+import { caseDetails } from "./case-details";
 
 describe("portfolio content", () => {
   it("keeps four projects in the confirmed order", () => {
@@ -17,8 +18,20 @@ describe("portfolio content", () => {
 
   it("gives every entry a detail page and story", () => {
     for (const item of portfolioItems) {
+      const detail = caseDetails[item.id];
       expect(item.href).toMatch(/^\.\/cases\/.+\.html$/);
       expect(item.story.length).toBeGreaterThanOrEqual(4);
+      expect(detail).toBeDefined();
+      expect(detail?.sections.length).toBeGreaterThanOrEqual(6);
+    }
+  });
+
+  it("gives each full case a role and evidence boundary", () => {
+    for (const item of portfolioItems) {
+      const detail = caseDetails[item.id];
+      expect(detail).toBeDefined();
+      expect(detail?.responsibility.length).toBeGreaterThan(20);
+      expect(detail?.evidence.length).toBeGreaterThan(10);
     }
   });
 

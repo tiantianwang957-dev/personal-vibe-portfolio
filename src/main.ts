@@ -1,5 +1,6 @@
 import "./styles/main.css";
 import { getItems, type PortfolioItem, type Section } from "./data/content";
+import { caseDetails, type CaseSection } from "./data/case-details";
 
 type View = "home" | Section | "resume";
 
@@ -155,23 +156,38 @@ function moveCase(direction: number): void {
 
 function openCase(item: PortfolioItem): void {
   if (!dialog || !dialogContent) return;
-  const stories = item.story
+  const detail = caseDetails[item.id];
+  if (!detail) return;
+  const renderSection = (entry: CaseSection) => `
+    <article class="case-study-section" id="case-${escapeHtml(item.id)}-${escapeHtml(entry.id)}">
+      <p class="case-study-label">${escapeHtml(entry.label)}</p>
+      <h3>${escapeHtml(entry.title)}</h3>
+      <p class="case-study-lead">${escapeHtml(entry.lead)}</p>
+      ${entry.bullets ? `<ul>${entry.bullets.map((text) => `<li>${escapeHtml(text)}</li>`).join("")}</ul>` : ""}
+      ${entry.flow ? `<div class="case-flow">${entry.flow.map((text, index) => `<span><small>${twoDigits(index + 1)}</small>${escapeHtml(text)}</span>`).join("")}</div>` : ""}
+      ${entry.note ? `<aside class="case-note"><strong>表达边界</strong><p>${escapeHtml(entry.note)}</p></aside>` : ""}
+      ${entry.media ? `<div class="case-media-placeholder"><span>素材位置</span><p>${escapeHtml(entry.media)}</p></div>` : ""}
+    </article>`;
+  const navigation = detail.sections
     .map(
-      (entry, index) => `
-        <article>
-          <span>${twoDigits(index + 1)}</span>
-          <div><h3>${escapeHtml(entry.title)}</h3><p>${escapeHtml(entry.body)}</p></div>
-        </article>`,
+      (entry) =>
+        `<a href="#case-${escapeHtml(item.id)}-${escapeHtml(entry.id)}">${escapeHtml(entry.label)}</a>`,
     )
     .join("");
+  const stories = detail.sections.map(renderSection).join("");
   dialogContent.innerHTML = `
-    <header class="dialog-header" style="--item-accent:${item.accent}">
+    <div class="case-study" style="--item-accent:${item.accent}">
+    <header class="dialog-header">
       <p class="eyebrow">${escapeHtml(item.eyebrow)}</p>
       <h2>${escapeHtml(item.title)}</h2>
       <p>${escapeHtml(item.summary)}</p>
-      <div class="meta"><span>${escapeHtml(item.role)}</span><span>${escapeHtml(item.period)}</span></div>
+      <div class="case-facts"><span><small>我的角色</small>${escapeHtml(item.role)}</span><span><small>项目周期</small>${escapeHtml(item.period)}</span><span><small>当前状态</small>${escapeHtml(detail.status)}</span></div>
+      <div class="case-evidence">${item.metrics.map((metric) => `<strong>${escapeHtml(metric)}</strong>`).join("")}</div>
     </header>
-    <section class="dialog-story">${stories}</section>`;
+    <div class="case-study-layout">
+      <aside class="case-study-nav"><p>CASE FILE</p><nav>${navigation}</nav><div><small>证据状态</small><span>${escapeHtml(detail.evidence)}</span></div></aside>
+      <section class="dialog-story"><div class="responsibility"><span>MY ROLE</span><p>${escapeHtml(detail.responsibility)}</p></div>${stories}</section>
+    </div></div>`;
   dialog.showModal();
 }
 
