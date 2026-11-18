@@ -49,5 +49,14 @@ describe("presentation website structure", () => {
   it("keeps case content reachable on short desktop screens", () => {
     expect(styles).toContain("@media (max-height: 760px)");
     expect(styles).toContain("overflow-y: auto");
+    expect(styles).not.toContain("-webkit-line-clamp: 3");
+  });
+
+  it("supports one-case-at-a-time desktop wheel navigation", () => {
+    expect(script).toContain('"wheel"');
+    expect(script).toContain("wheelLocked");
+    expect(script).toContain("Math.abs(event.deltaY) < 24");
+    expect(script).toContain("{ passive: false }");
+    expect(script).toContain("}, 650)");
   });
 });
