@@ -53,7 +53,11 @@ function twoDigits(value: number): string {
   return String(value).padStart(2, "0");
 }
 
-function renderCase(item: PortfolioItem, index: number): string {
+function renderCase(
+  item: PortfolioItem,
+  index: number,
+  section: Section,
+): string {
   const metrics = item.metrics
     .map((metric) => `<li>${escapeHtml(metric)}</li>`)
     .join("");
@@ -83,7 +87,7 @@ function renderCase(item: PortfolioItem, index: number): string {
       <div class="experience-visual" role="img" aria-label="${escapeHtml(item.visualLabel)}">
         <span class="visual-index">${twoDigits(index + 1)}</span>
         <div class="visual-orbit orbit-a"></div><div class="visual-orbit orbit-b"></div>
-        <div class="visual-ticket"><span>PROJECT EVIDENCE</span><p>${escapeHtml(item.visualLabel)}</p><small>素材到位后替换为真实截图</small></div>
+        <div class="visual-ticket"><span>${section === "projects" ? "PROJECT EVIDENCE" : "OPERATION EVIDENCE"}</span><p>${escapeHtml(item.visualLabel)}</p><small>素材到位后替换为真实截图</small></div>
       </div>
     </article>`;
 }
@@ -95,7 +99,7 @@ function renderSection(section: Section): void {
   viewport.innerHTML = getItems(section)
     .map(
       (item, index) =>
-        `<div class="case-frame${index === current ? " is-current" : ""}">${renderCase(item, index)}</div>`,
+        `<div class="case-frame${index === current ? " is-current" : ""}">${renderCase(item, index, section)}</div>`,
     )
     .join("");
 }
@@ -140,6 +144,13 @@ function renderView(): void {
 function selectView(view: View): void {
   state.view = view;
   renderView();
+  if (window.matchMedia("(max-width: 850px)").matches) {
+    requestAnimationFrame(() => {
+      document
+        .querySelector<HTMLElement>(`[data-panel="${view}"]`)
+        ?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }
 }
 
 function moveCase(direction: number): void {

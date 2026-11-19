@@ -28,7 +28,7 @@ export const portfolioItems: PortfolioItem[] = [
     period: "2026.07—2026.10",
     metrics: ["全国铜奖", "2.3 次 → 1.2 次", "65% → 90%+"],
     href: "./cases/hisense.html",
-    accent: "#5b6cff",
+    accent: "#2f6252",
     visualLabel: "AI 服务闭环 · 五模块演示",
     story: [
       {
@@ -69,7 +69,7 @@ export const portfolioItems: PortfolioItem[] = [
     period: "2024.12—2025.09",
     metrics: ["10+ 轮测试", "10+ 款实体产品", "内容—转化—交付"],
     href: "./cases/aigc.html",
-    accent: "#e96aa7",
+    accent: "#6f815f",
     visualLabel: "AI 设计 · 非遗纹样 · 实物产品",
     story: [
       {
@@ -106,7 +106,7 @@ export const portfolioItems: PortfolioItem[] = [
     period: "2026.09—2026.11",
     metrics: ["使用率 70% → 95%", "邀约率 54% → 69%", "三级指标体系"],
     href: "./cases/usage-platform.html",
-    accent: "#33a884",
+    accent: "#1f5948",
     visualLabel: "脱敏重构演示 · 全部为虚构数据",
     story: [
       {
@@ -146,7 +146,7 @@ export const portfolioItems: PortfolioItem[] = [
     period: "2023.11—2024.05",
     metrics: ["用户调研", "数据分析", "产品方案"],
     href: "./cases/pocket-park.html",
-    accent: "#79a83b",
+    accent: "#7a8f65",
     visualLabel: "调研过程与产品原型待补",
     story: [
       {
@@ -182,7 +182,7 @@ export const portfolioItems: PortfolioItem[] = [
     period: "2025.07—2025.12",
     metrics: ["活动增长", "内容运营", "创作者协同"],
     href: "./cases/weibo.html",
-    accent: "#ff7657",
+    accent: "#e86f3d",
     visualLabel: "活动与代表内容截图待补",
     story: [
       {
@@ -215,7 +215,7 @@ export const portfolioItems: PortfolioItem[] = [
     period: "时间待补",
     metrics: ["账号从 0 到 1", "内容 A/B 测试", "商业化探索"],
     href: "./cases/photography.html",
-    accent: "#7058d8",
+    accent: "#d58a48",
     visualLabel: "主页与代表作品待补",
     story: [
       {
@@ -248,7 +248,7 @@ export const portfolioItems: PortfolioItem[] = [
     period: "2026.01—2026.08",
     metrics: ["增长链路", "AI 工具推广", "服务闭环"],
     href: "./cases/jd-home.html",
-    accent: "#3a76d8",
+    accent: "#c65f37",
     visualLabel: "内部素材仅做脱敏重构",
     story: [
       {
