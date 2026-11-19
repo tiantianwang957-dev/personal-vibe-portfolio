@@ -8,7 +8,6 @@ const state: { view: View; indexes: Record<Section, number> } = {
   view: "home",
   indexes: { projects: 0, operations: 0 },
 };
-let wheelLocked = false;
 
 const panels = Array.from(
   document.querySelectorAll<HTMLElement>("[data-panel]"),
@@ -217,28 +216,6 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "ArrowLeft") moveCase(-1);
   if (event.key === "ArrowRight") moveCase(1);
 });
-
-document.addEventListener(
-  "wheel",
-  (event) => {
-    if (
-      dialog?.open ||
-      wheelLocked ||
-      !window.matchMedia("(min-width: 851px)").matches ||
-      (state.view !== "projects" && state.view !== "operations") ||
-      Math.abs(event.deltaY) < 24
-    ) {
-      return;
-    }
-    event.preventDefault();
-    wheelLocked = true;
-    moveCase(event.deltaY > 0 ? 1 : -1);
-    window.setTimeout(() => {
-      wheelLocked = false;
-    }, 650);
-  },
-  { passive: false },
-);
 
 renderSection("projects");
 renderSection("operations");

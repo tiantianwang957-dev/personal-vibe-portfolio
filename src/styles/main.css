@@ -1518,13 +1518,16 @@ a {
   }
 
   .experience-copy .slide-highlights li {
-    min-height: 0;
+    min-height: 82px;
     padding: 9px 10px;
     line-height: 1.35;
   }
 
   .experience-copy .slide-highlights span {
-    display: block;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   .experience-copy h2 {
