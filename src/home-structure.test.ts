@@ -50,4 +50,11 @@ describe("presentation website structure", () => {
     expect(styles).toContain("@media (max-height: 760px)");
     expect(styles).toContain("overflow-y: auto");
   });
+
+  it("keeps the presentation layout for narrow desktop windows", () => {
+    expect(styles).toContain(
+      "@media (min-width: 601px) and (max-width: 850px)",
+    );
+    expect(styles).toContain("@media (max-width: 600px)");
+  });
 });

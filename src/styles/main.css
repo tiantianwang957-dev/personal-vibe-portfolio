@@ -451,7 +451,7 @@ a {
   outline: 3px solid #5368ff;
   outline-offset: 4px;
 }
-@media (max-width: 850px) {
+@media (max-width: 600px) {
   .desktop-nav {
     display: none;
   }
@@ -1481,7 +1481,105 @@ a {
   }
 }
 
-@media (max-height: 760px) and (min-width: 851px) {
+@media (min-width: 601px) and (max-width: 850px) {
+  .presentation-site .site-header {
+    height: 64px;
+    padding: 8px 20px;
+  }
+
+  .presentation-site .site-logo {
+    font-size: 14px;
+  }
+
+  .presentation-site .desktop-nav {
+    gap: 20px;
+  }
+
+  .presentation-site .desktop-nav button {
+    font-size: 12px;
+  }
+
+  .header-status {
+    display: none;
+  }
+
+  .presentation-stage {
+    padding-top: 64px;
+  }
+
+  .stage-panel {
+    inset: 64px 0 0;
+  }
+
+  .hero-panel {
+    grid-template-columns: minmax(0, 1.15fr) minmax(190px, 0.55fr);
+    gap: 20px;
+    padding: 28px 24px;
+  }
+
+  .hero-panel h1 {
+    font-size: clamp(46px, 8vw, 66px);
+  }
+
+  .case-panel {
+    gap: 8px;
+    padding: 12px 20px 62px;
+  }
+
+  .panel-heading {
+    font-size: 11px;
+  }
+
+  .experience-page {
+    grid-template-columns: minmax(0, 1fr) minmax(180px, 0.42fr);
+    gap: 16px;
+    padding: 16px;
+  }
+
+  .experience-copy {
+    max-height: 100%;
+    overflow-y: auto;
+    padding-right: 4px;
+    scrollbar-width: thin;
+  }
+
+  .experience-copy h2 {
+    font-size: clamp(30px, 5vw, 42px);
+  }
+
+  .experience-copy .slide-summary {
+    font-size: 13px;
+  }
+
+  .experience-copy .slide-highlights li {
+    min-height: 88px;
+    padding: 10px;
+    line-height: 1.35;
+  }
+
+  .experience-visual {
+    min-height: 280px;
+    padding: 16px;
+  }
+
+  .visual-ticket {
+    width: 100%;
+    padding: 16px;
+  }
+
+  .visual-ticket p {
+    margin: 8px 0 18px;
+    font-size: 16px;
+  }
+
+  .resume-panel {
+    grid-template-columns: minmax(0, 0.8fr) minmax(290px, 1.2fr);
+    gap: 24px;
+    padding: 28px 24px;
+  }
+}
+
+@media (max-height: 760px) and (min-width: 601px) {
   .presentation-site .site-header {
     height: 64px;
     padding-block: 8px;
