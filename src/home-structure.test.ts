@@ -6,55 +6,20 @@ const home = readFileSync(
   resolve(import.meta.dirname, "../index.html"),
   "utf8",
 );
-const script = readFileSync(resolve(import.meta.dirname, "./main.ts"), "utf8");
-const styles = readFileSync(
-  resolve(import.meta.dirname, "./styles/main.css"),
-  "utf8",
-);
 
-describe("presentation website structure", () => {
-  it("provides the four confirmed primary views", () => {
-    for (const view of ["home", "projects", "operations", "resume"]) {
-      expect(home).toContain(`data-panel="${view}"`);
-      expect(home).toContain(`data-view="${view}"`);
-    }
+describe("home page structure", () => {
+  it("uses two real top-level tabs", () => {
+    expect(home.match(/data-section="projects"/g)).toHaveLength(1);
+    expect(home.match(/data-section="operations"/g)).toHaveLength(1);
   });
 
-  it("keeps independent project and operation case surfaces", () => {
-    expect(home).toContain('data-slide="projects"');
-    expect(home).toContain('data-slide="operations"');
+  it("keeps left and right paging controls", () => {
     expect(home).toContain("data-previous");
     expect(home).toContain("data-next");
-    expect(home).toContain("data-page-count");
   });
 
-  it("opens full cases in an in-page dialog", () => {
-    expect(home).toContain("data-case-dialog");
-    expect(home).toContain("data-dialog-content");
-    expect(script).toContain("showModal()");
-    expect(script).toContain("[data-open-case]");
-    expect(script).toContain("case-study-nav");
-    expect(script).toContain("caseDetails");
-  });
-
-  it("retains the personal introduction and photo area", () => {
-    expect(home).toContain("把复杂问题");
-    expect(home).toContain('class="portrait-placeholder"');
-  });
-
-  it("does not use separate case pages as primary navigation", () => {
-    expect(home).not.toMatch(/href="\.\/cases\//);
-  });
-
-  it("keeps case content reachable on short desktop screens", () => {
-    expect(styles).toContain("@media (max-height: 760px)");
-    expect(styles).toContain("overflow-y: auto");
-  });
-
-  it("keeps the presentation layout for narrow desktop windows", () => {
-    expect(styles).toContain(
-      "@media (min-width: 601px) and (max-width: 850px)",
-    );
-    expect(styles).toContain("@media (max-width: 600px)");
+  it("does not keep separate vertically stacked hero and about sections", () => {
+    expect(home).not.toContain('class="hero"');
+    expect(home).not.toContain('class="about"');
   });
 });

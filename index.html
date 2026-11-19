@@ -6,108 +6,38 @@
     <meta name="description" content="王湉甜的产品、AI 与运营作品集" />
     <title>王湉甜｜产品与运营作品集</title>
   </head>
-  <body class="presentation-site">
+  <body class="home-page">
     <header class="site-header">
-      <button class="brand" type="button" data-view="home">
-        WTT / PORTFOLIO
-      </button>
-      <nav class="desktop-nav" aria-label="主要导航" data-view-navigation>
-        <button class="is-active" type="button" data-view="home">首页</button>
-        <button type="button" data-view="projects">项目经历</button>
-        <button type="button" data-view="operations">运营经历</button>
-        <button type="button" data-view="resume">简历</button>
-      </nav>
-      <span class="header-status" data-header-status>首页 · 01</span>
+      <a class="brand" href="./index.html">WTT / PORTFOLIO</a>
+      <div class="tabs header-tabs" role="tablist" aria-label="作品类型">
+        <button
+          class="is-active"
+          data-section="projects"
+          role="tab"
+          aria-selected="true"
+        >
+          项目经历 / Projects</button
+        ><button data-section="operations" role="tab" aria-selected="false">
+          运营经历 / Operations
+        </button>
+      </div>
+      <a
+        class="resume-link"
+        href="#"
+        aria-disabled="true"
+        aria-label="简历将在公开信息复核后提供"
+        >简历 / Resume</a
+      >
     </header>
-
-    <main class="presentation-stage">
-      <section class="stage-panel hero-panel is-active" data-panel="home">
-        <div>
-          <p class="hero-label">PRODUCT · AI · OPERATIONS</p>
-          <h1>把复杂问题，<br /><span>做成可用的方案。</span></h1>
-          <p class="hero-copy">
-            你好，我是王湉甜。一个从业务与用户问题出发，也会借助 AI 与 Vibe
-            Coding 快速验证想法的产品与运营候选人。
-          </p>
-          <div class="hero-actions">
-            <button class="primary-button" type="button" data-view="projects">
-              查看项目经历 <span aria-hidden="true">→</span>
-            </button>
-            <button
-              class="secondary-button"
-              type="button"
-              data-view="operations"
-            >
-              查看运营经历
-            </button>
-          </div>
-        </div>
-        <div class="portrait-placeholder" aria-label="个人照片待补">
-          <div><strong>PHOTO AREA</strong><span>个人照片稍后替换</span></div>
-        </div>
-      </section>
-
-      <section class="stage-panel case-panel" data-panel="projects">
-        <div class="panel-heading">
-          <p class="hero-label">PROJECT EXPERIENCE</p>
-          <p>四个项目，每页只讲清楚一个判断。</p>
-        </div>
-        <div data-slide="projects" aria-live="polite"></div>
-      </section>
-
-      <section class="stage-panel case-panel" data-panel="operations">
-        <div class="panel-heading">
-          <p class="hero-label">OPERATION EXPERIENCE</p>
-          <p>从内容、活动到工具推广，展示增长闭环。</p>
-        </div>
-        <div data-slide="operations" aria-live="polite"></div>
-      </section>
-
-      <section class="stage-panel resume-panel" data-panel="resume">
-        <div class="resume-copy">
-          <p class="hero-label">RESUME · PROFILE</p>
-          <h2>产品判断、AI 原型与运营落地。</h2>
-          <p>
-            我的经历连接产品设计、用户研究、数据运营和内容增长。简历文件将在公开信息复核后提供下载。
-          </p>
-        </div>
-        <div class="resume-board">
-          <article>
-            <span>01</span><strong>产品与服务设计</strong>
-            <p>把业务问题转成清晰链路、角色边界和可验证方案。</p>
-          </article>
-          <article>
-            <span>02</span><strong>AI 与 Vibe Coding</strong>
-            <p>用原型快速验证交互、工作流与关键产品假设。</p>
-          </article>
-          <article>
-            <span>03</span><strong>运营与增长</strong>
-            <p>连接内容、用户、工具推广与结果复盘。</p>
-          </article>
-          <button type="button" disabled>简历待公开复核</button>
+    <main class="home-stage">
+      <section class="work" aria-label="作品展示">
+        <div data-slide aria-live="polite"></div>
+        <div class="controls" aria-label="案例翻页">
+          <button data-previous aria-label="上一个案例">←</button
+          ><button data-next aria-label="下一个案例">→</button>
         </div>
       </section>
     </main>
-
-    <div class="case-controls" data-case-controls hidden>
-      <button type="button" data-previous aria-label="上一个案例">←</button>
-      <span data-page-count>01 / 04</span>
-      <button type="button" data-next aria-label="下一个案例">→</button>
-    </div>
-
-    <dialog class="case-dialog" data-case-dialog>
-      <div class="dialog-shell">
-        <button
-          class="dialog-close"
-          type="button"
-          data-dialog-close
-          aria-label="关闭完整案例"
-        >
-          ×
-        </button>
-        <div data-dialog-content></div>
-      </div>
-    </dialog>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

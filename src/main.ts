@@ -1,40 +1,17 @@
 import "./styles/main.css";
 import { getItems, type PortfolioItem, type Section } from "./data/content";
-import { caseDetails, type CaseSection } from "./data/case-details";
 
-type View = "home" | Section | "resume";
-
-const state: { view: View; indexes: Record<Section, number> } = {
-  view: "home",
-  indexes: { projects: 0, operations: 0 },
+const state: { section: Section; index: number } = {
+  section: "projects",
+  index: 0,
 };
 
-const panels = Array.from(
-  document.querySelectorAll<HTMLElement>("[data-panel]"),
+const viewport = document.querySelector<HTMLElement>("[data-slide]");
+const tabs = Array.from(
+  document.querySelectorAll<HTMLButtonElement>("[data-section]"),
 );
-const viewButtons = Array.from(
-  document.querySelectorAll<HTMLButtonElement>("[data-view]"),
-);
-const projectViewport = document.querySelector<HTMLElement>(
-  '[data-slide="projects"]',
-);
-const operationViewport = document.querySelector<HTMLElement>(
-  '[data-slide="operations"]',
-);
-const controls = document.querySelector<HTMLElement>("[data-case-controls]");
 const previous = document.querySelector<HTMLButtonElement>("[data-previous]");
 const next = document.querySelector<HTMLButtonElement>("[data-next]");
-const pageCount = document.querySelector<HTMLElement>("[data-page-count]");
-const headerStatus = document.querySelector<HTMLElement>(
-  "[data-header-status]",
-);
-const dialog = document.querySelector<HTMLDialogElement>("[data-case-dialog]");
-const dialogContent = document.querySelector<HTMLElement>(
-  "[data-dialog-content]",
-);
-const dialogClose = document.querySelector<HTMLButtonElement>(
-  "[data-dialog-close]",
-);
 
 function escapeHtml(value: string): string {
   return value.replace(/[&<>'"]/g, (character) => {
@@ -49,11 +26,7 @@ function escapeHtml(value: string): string {
   });
 }
 
-function twoDigits(value: number): string {
-  return String(value).padStart(2, "0");
-}
-
-function renderCase(item: PortfolioItem, index: number): string {
+function renderItem(item: PortfolioItem, total: number): string {
   const metrics = item.metrics
     .map((metric) => `<li>${escapeHtml(metric)}</li>`)
     .join("");
@@ -67,156 +40,60 @@ function renderCase(item: PortfolioItem, index: number): string {
         </li>`,
     )
     .join("");
-
   return `
-    <article class="experience-page" style="--item-accent:${item.accent}">
-      <div class="experience-copy">
-        <div class="case-kicker"><span>CASE ${twoDigits(index + 1)}</span><p class="eyebrow">${escapeHtml(item.eyebrow)}</p></div>
+    <article class="slide-card" style="--item-accent:${item.accent}">
+      <div class="slide-copy">
+        <p class="eyebrow">王湉甜 · ${escapeHtml(item.eyebrow)}</p>
         <h2>${escapeHtml(item.title)}</h2>
         <p class="slide-summary">${escapeHtml(item.summary)}</p>
         <div class="meta"><span>${escapeHtml(item.role)}</span><span>${escapeHtml(item.period)}</span></div>
-        <p class="evidence-label">关键结果 / EVIDENCE</p>
         <ul class="metric-list">${metrics}</ul>
         <ol class="slide-highlights">${highlights}</ol>
-        <button class="case-link" type="button" data-open-case="${escapeHtml(item.id)}">查看完整案例 <span aria-hidden="true">↗</span></button>
+        <a class="case-link secondary-case-link" href="${item.href}">补充详情 <span aria-hidden="true">↗</span></a>
       </div>
-      <div class="experience-visual" role="img" aria-label="${escapeHtml(item.visualLabel)}">
-        <span class="visual-index">${twoDigits(index + 1)}</span>
-        <div class="visual-orbit orbit-a"></div><div class="visual-orbit orbit-b"></div>
-        <div class="visual-ticket"><span>PROJECT EVIDENCE</span><p>${escapeHtml(item.visualLabel)}</p><small>素材到位后替换为真实截图</small></div>
+      <div class="slide-visual" role="img" aria-label="${escapeHtml(item.visualLabel)}">
+        <div class="orb orb-one"></div><div class="orb orb-two"></div>
+        <span class="visual-index">0${state.index + 1}</span>
+        <p>${escapeHtml(item.visualLabel)}</p>
       </div>
+      <div class="slide-count"><strong>0${state.index + 1}</strong><span>/ 0${total}</span></div>
     </article>`;
 }
 
-function renderSection(section: Section): void {
-  const viewport = section === "projects" ? projectViewport : operationViewport;
+function render(): void {
   if (!viewport) return;
-  const current = state.indexes[section];
-  viewport.innerHTML = getItems(section)
-    .map(
-      (item, index) =>
-        `<div class="case-frame${index === current ? " is-current" : ""}">${renderCase(item, index)}</div>`,
-    )
-    .join("");
-}
-
-function updateChrome(): void {
-  const isSection = state.view === "projects" || state.view === "operations";
-  controls?.toggleAttribute("hidden", !isSection);
-
-  if (isSection) {
-    const section = state.view as Section;
-    const items = getItems(section);
-    const index = state.indexes[section];
-    if (pageCount) {
-      pageCount.textContent = `${twoDigits(index + 1)} / ${twoDigits(items.length)}`;
-    }
-    previous?.toggleAttribute("disabled", index === 0);
-    next?.toggleAttribute("disabled", index === items.length - 1);
-  }
-
-  const labels: Record<View, string> = {
-    home: "首页 · 01",
-    projects: "项目经历",
-    operations: "运营经历",
-    resume: "简历 · 01",
-  };
-  if (headerStatus) headerStatus.textContent = labels[state.view];
-}
-
-function renderView(): void {
-  panels.forEach((panel) => {
-    panel.classList.toggle("is-active", panel.dataset.panel === state.view);
+  const items = getItems(state.section);
+  state.index = Math.min(state.index, items.length - 1);
+  const current = items[state.index];
+  if (!current) return;
+  viewport.innerHTML = renderItem(current, items.length);
+  tabs.forEach((tab) => {
+    const selected = tab.dataset.section === state.section;
+    tab.classList.toggle("is-active", selected);
+    tab.setAttribute("aria-selected", String(selected));
   });
-  viewButtons.forEach((button) => {
-    button.classList.toggle("is-active", button.dataset.view === state.view);
+  previous?.setAttribute("aria-disabled", String(state.index === 0));
+  next?.setAttribute("aria-disabled", String(state.index === items.length - 1));
+}
+
+function move(direction: number): void {
+  const lastIndex = getItems(state.section).length - 1;
+  state.index = Math.max(0, Math.min(lastIndex, state.index + direction));
+  render();
+}
+
+tabs.forEach((tab) => {
+  tab.addEventListener("click", () => {
+    state.section = tab.dataset.section as Section;
+    state.index = 0;
+    render();
   });
-  if (state.view === "projects" || state.view === "operations") {
-    renderSection(state.view);
-  }
-  updateChrome();
-}
-
-function selectView(view: View): void {
-  state.view = view;
-  renderView();
-}
-
-function moveCase(direction: number): void {
-  if (state.view !== "projects" && state.view !== "operations") return;
-  const items = getItems(state.view);
-  const current = state.indexes[state.view];
-  state.indexes[state.view] = Math.max(
-    0,
-    Math.min(items.length - 1, current + direction),
-  );
-  renderSection(state.view);
-  updateChrome();
-}
-
-function openCase(item: PortfolioItem): void {
-  if (!dialog || !dialogContent) return;
-  const detail = caseDetails[item.id];
-  if (!detail) return;
-  const renderSection = (entry: CaseSection) => `
-    <article class="case-study-section" id="case-${escapeHtml(item.id)}-${escapeHtml(entry.id)}">
-      <p class="case-study-label">${escapeHtml(entry.label)}</p>
-      <h3>${escapeHtml(entry.title)}</h3>
-      <p class="case-study-lead">${escapeHtml(entry.lead)}</p>
-      ${entry.bullets ? `<ul>${entry.bullets.map((text) => `<li>${escapeHtml(text)}</li>`).join("")}</ul>` : ""}
-      ${entry.flow ? `<div class="case-flow">${entry.flow.map((text, index) => `<span><small>${twoDigits(index + 1)}</small>${escapeHtml(text)}</span>`).join("")}</div>` : ""}
-      ${entry.note ? `<aside class="case-note"><strong>表达边界</strong><p>${escapeHtml(entry.note)}</p></aside>` : ""}
-      ${entry.media ? `<div class="case-media-placeholder"><span>素材位置</span><p>${escapeHtml(entry.media)}</p></div>` : ""}
-    </article>`;
-  const navigation = detail.sections
-    .map(
-      (entry) =>
-        `<a href="#case-${escapeHtml(item.id)}-${escapeHtml(entry.id)}">${escapeHtml(entry.label)}</a>`,
-    )
-    .join("");
-  const stories = detail.sections.map(renderSection).join("");
-  dialogContent.innerHTML = `
-    <div class="case-study" style="--item-accent:${item.accent}">
-    <header class="dialog-header">
-      <p class="eyebrow">${escapeHtml(item.eyebrow)}</p>
-      <h2>${escapeHtml(item.title)}</h2>
-      <p>${escapeHtml(item.summary)}</p>
-      <div class="case-facts"><span><small>我的角色</small>${escapeHtml(item.role)}</span><span><small>项目周期</small>${escapeHtml(item.period)}</span><span><small>当前状态</small>${escapeHtml(detail.status)}</span></div>
-      <div class="case-evidence">${item.metrics.map((metric) => `<strong>${escapeHtml(metric)}</strong>`).join("")}</div>
-    </header>
-    <div class="case-study-layout">
-      <aside class="case-study-nav"><p>CASE FILE</p><nav>${navigation}</nav><div><small>证据状态</small><span>${escapeHtml(detail.evidence)}</span></div></aside>
-      <section class="dialog-story"><div class="responsibility"><span>MY ROLE</span><p>${escapeHtml(detail.responsibility)}</p></div>${stories}</section>
-    </div></div>`;
-  dialog.showModal();
-}
-
-viewButtons.forEach((button) => {
-  button.addEventListener("click", () =>
-    selectView(button.dataset.view as View),
-  );
 });
-previous?.addEventListener("click", () => moveCase(-1));
-next?.addEventListener("click", () => moveCase(1));
-dialogClose?.addEventListener("click", () => dialog?.close());
-dialog?.addEventListener("click", (event) => {
-  if (event.target === dialog) dialog.close();
-});
-document.addEventListener("click", (event) => {
-  const target = event.target as HTMLElement;
-  const button = target.closest<HTMLButtonElement>("[data-open-case]");
-  if (!button) return;
-  const item = [...getItems("projects"), ...getItems("operations")].find(
-    (entry) => entry.id === button.dataset.openCase,
-  );
-  if (item) openCase(item);
-});
+previous?.addEventListener("click", () => move(-1));
+next?.addEventListener("click", () => move(1));
 document.addEventListener("keydown", (event) => {
-  if (dialog?.open) return;
-  if (event.key === "ArrowLeft") moveCase(-1);
-  if (event.key === "ArrowRight") moveCase(1);
+  if (event.key === "ArrowLeft") move(-1);
+  if (event.key === "ArrowRight") move(1);
 });
 
-renderSection("projects");
-renderSection("operations");
-renderView();
+render();
